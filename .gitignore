@@ -3,3 +3,6 @@
 # Python
 __pycache__/
 *.py[cod]
+
+# Local secrets for the HTTP client (copy http-client.private.env.json.example)
+http-client.private.env.json

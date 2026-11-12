@@ -1,0 +1,71 @@
+### Atome Connector API (PyCharm HTTP Client)
+### Pick the "local" environment. {{host}} and {{db}} come from http-client.env.json,
+### {{apiKey}} from http-client.private.env.json (copy the .example file; it is git-ignored).
+
+### 1. Health (no API key needed)
+GET {{host}}/atome/api/v1/health
+X-Odoo-Database: {{db}}
+
+### 2. Missing key -> 401 UNAUTHENTICATED
+GET {{host}}/atome/api/v1/products
+X-Odoo-Database: {{db}}
+
+### 3. Products, optionally filtered: ?category=FIRE_RATED&q=door
+GET {{host}}/atome/api/v1/products?category=FIRE_RATED
+Authorization: Bearer {{apiKey}}
+X-Odoo-Database: {{db}}
+
+### 4. Create a draft quotation -> 201 QUOTATION_CREATED
+###    Run it twice: the second call returns 200 QUOTATION_ALREADY_EXISTS (no duplicate).
+POST {{host}}/atome/api/v1/quotations
+Authorization: Bearer {{apiKey}}
+X-Odoo-Database: {{db}}
+Content-Type: application/json
+
+{
+  "atome_reference": "ATM-1001",
+  "customer": { "name": "Harbourline Construction Ltd" },
+  "create_customer_if_missing": true,
+  "lines": [
+    { "door_category": "FIRE_RATED", "description": "D-101 - Fire-rated door, 2100 x 900 mm", "qty": 4, "unit_price": "1250.00" },
+    { "door_category": "STANDARD", "qty": 6, "unit_price": 410.5 }
+  ]
+}
+
+### 5. Validation errors -> 422 VALIDATION_FAILED with data.fields
+POST {{host}}/atome/api/v1/quotations
+Authorization: Bearer {{apiKey}}
+X-Odoo-Database: {{db}}
+Content-Type: application/json
+
+{
+  "atome_reference": "x",
+  "customer": {},
+  "lines": [
+    { "door_category": "WOODEN", "qty": 0, "unit_price": "abc" },
+    { "qty": 2, "unit_price": "1.234" }
+  ]
+}
+
+### 6. Invalid JSON -> 400 INVALID_JSON
+POST {{host}}/atome/api/v1/quotations
+Authorization: Bearer {{apiKey}}
+X-Odoo-Database: {{db}}
+Content-Type: application/json
+
+{ not json
+
+### 7. One quotation by Atome reference (404 QUOTATION_NOT_FOUND if unknown)
+GET {{host}}/atome/api/v1/quotations/ATM-1001
+Authorization: Bearer {{apiKey}}
+X-Odoo-Database: {{db}}
+
+### 8. List, newest first, cursor pagination: use pagination.nextCursor as ?cursor=
+GET {{host}}/atome/api/v1/quotations?limit=2
+Authorization: Bearer {{apiKey}}
+X-Odoo-Database: {{db}}
+
+### 9. Wrong method -> 405 METHOD_NOT_ALLOWED
+DELETE {{host}}/atome/api/v1/products
+Authorization: Bearer {{apiKey}}
+X-Odoo-Database: {{db}}
