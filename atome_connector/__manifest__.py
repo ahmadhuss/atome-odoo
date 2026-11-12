@@ -23,9 +23,7 @@ Adds the integration points Atome Manufacturing needs in Odoo:
     'depends': ['sale'],
 
     # Files loaded on install/upgrade (every listed file must exist)
-    'data': [
-        # 'security/ir.model.access.csv',
-    ],
+    'data': [],
     'application': False,
     'installable': True,
     'auto_install': False,
