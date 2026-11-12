@@ -24,7 +24,9 @@ Adds the integration points Atome Manufacturing needs in Odoo:
 
     # Files loaded on install/upgrade (every listed file must exist)
     'data': [
+        'data/product_data.xml',
         'views/sale_order_views.xml',
+        'views/product_template_views.xml',
     ],
     'application': False,
     'installable': True,

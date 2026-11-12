@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- One product per Atome door category. Created once on install and never overwritten on upgrade,
+         so you can rename them or change their price freely. -->
+
+    <record id="product_door_fire_rated" model="product.template">
+        <field name="name">Fire-rated door</field>
+        <field name="default_code">ATOME-FIRE</field>
+        <field name="type">consu</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="list_price">0.0</field>
+        <field name="atome_door_category">FIRE_RATED</field>
+    </record>
+
+    <record id="product_door_smoke_rated" model="product.template">
+        <field name="name">Smoke-rated door</field>
+        <field name="default_code">ATOME-SMOKE</field>
+        <field name="type">consu</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="list_price">0.0</field>
+        <field name="atome_door_category">SMOKE_RATED</field>
+    </record>
+
+    <record id="product_door_standard" model="product.template">
+        <field name="name">Standard door</field>
+        <field name="default_code">ATOME-STANDARD</field>
+        <field name="type">consu</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="list_price">0.0</field>
+        <field name="atome_door_category">STANDARD</field>
+    </record>
+
+    <record id="product_door_other" model="product.template">
+        <field name="name">Other door</field>
+        <field name="default_code">ATOME-OTHER</field>
+        <field name="type">consu</field>
+        <field name="sale_ok" eval="True"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="list_price">0.0</field>
+        <field name="atome_door_category">OTHER</field>
+    </record>
+</odoo>
